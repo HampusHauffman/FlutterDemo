@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "74275124142",
+    "project_id": "flutter-talk1",
+    "storage_bucket": "flutter-talk1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74275124142:android:2a28ad05839c2d5d7a0e3f",
+        "android_client_info": {
+          "package_name": "com.example.flutter_talk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqPG1nF95wsNDog2gWvP5JPYxq2TpH8wA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

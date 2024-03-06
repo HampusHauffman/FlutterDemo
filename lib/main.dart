@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_talk/auth_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 part 'main.g.dart';
 
@@ -11,7 +14,11 @@ class Counter extends _$Counter {
   void increment() => state++;
 }
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -37,7 +44,13 @@ class MyApp extends ConsumerWidget {
               children: <Widget>[
                 const Text('You have pushed the button this many times:'),
                 Text('$counter',
-                    style: Theme.of(context).textTheme.headlineMedium)
+                    style: Theme.of(context).textTheme.headlineMedium),
+                ElevatedButton(
+                  onPressed: () async {
+                    await ref.read(authProvider.notifier).signIn();
+                  },
+                  child: const Text('Sign in with Google'),
+                ),
               ],
             ),
           ),

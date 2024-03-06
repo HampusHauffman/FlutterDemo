@@ -1,9 +1,10 @@
 # Fluttering to Efficiency: Embracing Multiplatform Magic and Power tools!
 
 ## Intro
-Wrote a small AI app that uses gemeni and firebase to proompt
-
-## Multiplatform
+### Multiplatform
+### Written in DART
+### Pubspec
+### Powerful Devtools
 
 ## Developing with Flutter
 ### Tooling
@@ -13,6 +14,7 @@ Wrote a small AI app that uses gemeni and firebase to proompt
     * Create a test app [https://docs.flutter.dev/get-started/test-drive]
 * Flutter doctor
     * Extremely easy to healthcheck!
+
 
 ### Hot reload on IOS WEB and ANDROID
 ### Theme

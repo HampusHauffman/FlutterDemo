@@ -48,7 +48,7 @@ Theming is extremely easy to do in flutter
 ## Firebase
 
 ## Time spent
-* 10 min to install everything thanks to XCode (3.4G) and IOS Emulator (7.35G) but u can ofc use chrome
+* 10 min to install everything thanks to XCode and IOS Emulator but only if you want to use IOS
 * 7 min to follow setup
 
 ## Extra mentions

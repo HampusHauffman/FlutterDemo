@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_talk/auth_provider.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_talk/chat_provider.dart';
 import 'firebase_options.dart';
-
-part 'main.g.dart';
-
-@riverpod
-class Counter extends _$Counter {
-  @override
-  int build() => 0;
-  void increment() => state++;
-}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,34 +21,41 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    int counter = ref.watch(counterProvider);
-
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-              title: const Text("Flutter Demo")),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text('You have pushed the button this many times:'),
-                Text('$counter',
-                    style: Theme.of(context).textTheme.headlineMedium),
-                ElevatedButton(
-                  onPressed: () async {
-                    await ref.read(authProvider.notifier).signIn();
-                  },
-                  child: const Text('Sign in with Google'),
+        appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            title: const Text("Flutter Demo")),
+        // Create the view for a chat app where you can enter text and chat
+        // At the bottom is the text input and the rest of the screen is the chat
+        body: Column(
+          children: [
+            Expanded(
+                child: Text(ref
+                    .watch(chatProvider)
+                    .values
+                    .map((e) => e.message)
+                    .toString())),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Enter your message",
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.send),
+                    onPressed: () {
+                      debugPrint("Send message");
+                      ref
+                          .read(chatProvider.notifier)
+                          .addMessage(Message(email: "awd", message: "HELLO"));
+                    },
+                  ),
                 ),
-              ],
+              ),
             ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => ref.read(counterProvider.notifier).increment(),
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          )),
+          ],
+        ),
+      ),
     );
   }
 }

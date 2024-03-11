@@ -14,7 +14,8 @@ class Auth extends _$Auth {
   }
 
   @override
-  User? build() {
+  FutureOr<User> build() async {
+    if (user() == null) await FirebaseAuth.instance.signInAnonymously();
     return user();
   }
 }

@@ -6,13 +6,15 @@ part of 'chat_provider.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Message _$MessageFromJson(Map<String, dynamic> json) => Message(
-      email: json['email'] as String,
+_$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
+    _$MessageImpl(
+      uid: json['uid'] as String,
       message: json['message'] as String,
     );
 
-Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
-      'email': instance.email,
+Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
+    <String, dynamic>{
+      'uid': instance.uid,
       'message': instance.message,
     };
 
@@ -20,7 +22,7 @@ Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
 // RiverpodGenerator
 // **************************************************************************
 
-String _$chatHash() => r'c9115c284ee023bed6e04bfb5447e40db7ba1826';
+String _$chatHash() => r'66617cbdb1eaaef455885c3c386f56e41481da8b';
 
 /// See also [Chat].
 @ProviderFor(Chat)

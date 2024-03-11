@@ -1,8 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_talk/auth_provider.dart';
 import 'package:flutter_talk/chat_provider.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'firebase_options.dart';
+
+part 'main.g.dart';
+
+// current message provider
+@riverpod
+class CurrentMessage extends _$CurrentMessage {
+  @override
+  String build() => "";
+
+  void set(String message) {
+    state = message;
+    debugPrint("message: $state");
+  }
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,30 +40,40 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+            // login button
+            leading: IconButton(
+              icon: const Icon(Icons.login),
+              onPressed: () async {
+                await ref.read(authProvider.notifier).signIn();
+              },
+            ),
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: const Text("Flutter Demo")),
-        // Create the view for a chat app where you can enter text and chat
-        // At the bottom is the text input and the rest of the screen is the chat
         body: Column(
           children: [
             Expanded(
-                child: Text(ref
+              child: Column(
+                children: ref
                     .watch(chatProvider)
-                    .values
-                    .map((e) => e.message)
-                    .toString())),
+                    .entries
+                    .map((entries) => Text(entries.value.message))
+                    .toList(),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
+                onChanged: (t) {
+                  ref.watch(currentMessageProvider.notifier).set(t);
+                },
                 decoration: InputDecoration(
                   hintText: "Enter your message",
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.send),
                     onPressed: () {
-                      debugPrint("Send message");
-                      ref
-                          .read(chatProvider.notifier)
-                          .addMessage(Message(email: "awd", message: "HELLO"));
+                      String message = ref.watch(currentMessageProvider);
+                      debugPrint("message2: $message");
+                      ref.watch(chatProvider.notifier).addMessage(message);
                     },
                   ),
                 ),

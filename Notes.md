@@ -35,6 +35,7 @@ Theming is extremely easy to do in flutter
 * Freezed - For boilerplate code generation.
 * go_router - For navigation.
 * Firebase - For auth, realtime storage and cloud messaging.
+* Collections - For doing lambda stuff with collections.
 ### Steps
 * Follow the Flutter setup guide!
     * Install everything [https://docs.flutter.dev/get-started/install/macos/mobile-ios?tab=download]
@@ -46,6 +47,10 @@ Theming is extremely easy to do in flutter
     * Install Firebase **Firestore**
 
 ## Firebase
+* Oauth2 Login
+* Anon users
+* Firestore
+
 
 ## Time spent
 * 10 min to install everything thanks to XCode and IOS Emulator but only if you want to use IOS

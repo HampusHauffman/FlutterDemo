@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_talk/auth_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -6,18 +8,14 @@ import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
 part 'chat_provider.g.dart';
+part 'chat_provider.freezed.dart';
 
-@JsonSerializable()
-class Message {
-  Message({
-    required this.email,
-    required this.message,
-  });
-
-  final String email;
-  final String message;
-
-  Map<String, dynamic> toJson() => _$MessageToJson(this);
+@Freezed()
+class Message with _$Message {
+  factory Message({
+    required String uid,
+    required String message,
+  }) = _Message;
 
   factory Message.fromJson(Map<String, dynamic> json) =>
       _$MessageFromJson(json);
@@ -27,20 +25,22 @@ class Message {
 class Chat extends _$Chat {
   final _docRef = FirebaseFirestore.instance.collection("chat").doc("open");
 
-  void addMessage(Message message) {
-    _docRef.update({const Uuid().v8().toString(): message.toJson()});
+  Future<void> addMessage(String message) async {
+    _docRef.update({
+      const Uuid().v8().toString(): Message(
+              uid: (await ref.read(authProvider.future)).uid, message: message)
+          .toJson(),
+    });
   }
 
   @override
   Map<String, Message> build() {
     _docRef.snapshots().listen(
       (event) {
-        debugPrint("current data: ${event.data().toString()}");
         state = event
             .data()!
             .map((key, value) => MapEntry(key, Message.fromJson(value)));
       },
-      onError: (error) => debugPrint("Listen failed: $error"),
     );
     return Map.of({});
   }

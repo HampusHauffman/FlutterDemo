@@ -10,24 +10,25 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
     _$MessageImpl(
       uid: json['uid'] as String,
       message: json['message'] as String,
+      timestamp: DateTime.parse(json['timestamp'] as String),
     );
 
 Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
     <String, dynamic>{
       'uid': instance.uid,
       'message': instance.message,
+      'timestamp': instance.timestamp.toIso8601String(),
     };
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$chatHash() => r'66617cbdb1eaaef455885c3c386f56e41481da8b';
+String _$chatHash() => r'3bf52a6203c7896f96d04bd584e5ebadb45c2311';
 
 /// See also [Chat].
 @ProviderFor(Chat)
-final chatProvider =
-    AutoDisposeNotifierProvider<Chat, Map<String, Message>>.internal(
+final chatProvider = AutoDisposeNotifierProvider<Chat, List<Message>>.internal(
   Chat.new,
   name: r'chatProvider',
   debugGetCreateSourceHash:
@@ -36,6 +37,6 @@ final chatProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$Chat = AutoDisposeNotifier<Map<String, Message>>;
+typedef _$Chat = AutoDisposeNotifier<List<Message>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

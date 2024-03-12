@@ -22,6 +22,7 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
 mixin _$Message {
   String get uid => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
+  DateTime get timestamp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +34,7 @@ abstract class $MessageCopyWith<$Res> {
   factory $MessageCopyWith(Message value, $Res Function(Message) then) =
       _$MessageCopyWithImpl<$Res, Message>;
   @useResult
-  $Res call({String uid, String message});
+  $Res call({String uid, String message, DateTime timestamp});
 }
 
 /// @nodoc
@@ -51,6 +52,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   $Res call({
     Object? uid = null,
     Object? message = null,
+    Object? timestamp = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -61,6 +63,10 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      timestamp: null == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -72,7 +78,7 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
       __$$MessageImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uid, String message});
+  $Res call({String uid, String message, DateTime timestamp});
 }
 
 /// @nodoc
@@ -88,6 +94,7 @@ class __$$MessageImplCopyWithImpl<$Res>
   $Res call({
     Object? uid = null,
     Object? message = null,
+    Object? timestamp = null,
   }) {
     return _then(_$MessageImpl(
       uid: null == uid
@@ -98,6 +105,10 @@ class __$$MessageImplCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      timestamp: null == timestamp
+          ? _value.timestamp
+          : timestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -105,7 +116,8 @@ class __$$MessageImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
-  _$MessageImpl({required this.uid, required this.message});
+  _$MessageImpl(
+      {required this.uid, required this.message, required this.timestamp});
 
   factory _$MessageImpl.fromJson(Map<String, dynamic> json) =>
       _$$MessageImplFromJson(json);
@@ -114,10 +126,12 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
   final String uid;
   @override
   final String message;
+  @override
+  final DateTime timestamp;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Message(uid: $uid, message: $message)';
+    return 'Message(uid: $uid, message: $message, timestamp: $timestamp)';
   }
 
   @override
@@ -126,7 +140,8 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
     properties
       ..add(DiagnosticsProperty('type', 'Message'))
       ..add(DiagnosticsProperty('uid', uid))
-      ..add(DiagnosticsProperty('message', message));
+      ..add(DiagnosticsProperty('message', message))
+      ..add(DiagnosticsProperty('timestamp', timestamp));
   }
 
   @override
@@ -135,12 +150,14 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
         (other.runtimeType == runtimeType &&
             other is _$MessageImpl &&
             (identical(other.uid, uid) || other.uid == uid) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uid, message);
+  int get hashCode => Object.hash(runtimeType, uid, message, timestamp);
 
   @JsonKey(ignore: true)
   @override
@@ -157,8 +174,10 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
 }
 
 abstract class _Message implements Message {
-  factory _Message({required final String uid, required final String message}) =
-      _$MessageImpl;
+  factory _Message(
+      {required final String uid,
+      required final String message,
+      required final DateTime timestamp}) = _$MessageImpl;
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$MessageImpl.fromJson;
 
@@ -166,6 +185,8 @@ abstract class _Message implements Message {
   String get uid;
   @override
   String get message;
+  @override
+  DateTime get timestamp;
   @override
   @JsonKey(ignore: true)
   _$$MessageImplCopyWith<_$MessageImpl> get copyWith =>

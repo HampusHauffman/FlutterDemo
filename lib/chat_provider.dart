@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter_talk/auth_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -15,6 +15,7 @@ class Message with _$Message {
   factory Message({
     required String uid,
     required String message,
+    required DateTime timestamp,
   }) = _Message;
 
   factory Message.fromJson(Map<String, dynamic> json) =>
@@ -28,20 +29,29 @@ class Chat extends _$Chat {
   Future<void> addMessage(String message) async {
     _docRef.update({
       const Uuid().v8().toString(): Message(
-              uid: (await ref.read(authProvider.future)).uid, message: message)
-          .toJson(),
+        uid: (await ref.read(authProvider.future)).uid,
+        message: message,
+        timestamp: DateTime.now(),
+      ).toJson(),
     });
   }
 
   @override
-  Map<String, Message> build() {
+  List<Message> build() {
     _docRef.snapshots().listen(
       (event) {
         state = event
             .data()!
-            .map((key, value) => MapEntry(key, Message.fromJson(value)));
+            .map(
+              (key, value) => MapEntry(
+                key,
+                Message.fromJson(value),
+              ),
+            )
+            .values
+            .sorted((a, b) => a.timestamp.compareTo(b.timestamp));
       },
     );
-    return Map.of({});
+    return List.of([]);
   }
 }

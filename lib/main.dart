@@ -55,8 +55,19 @@ class MyApp extends ConsumerWidget {
               child: Column(
                 children: ref
                     .watch(chatProvider)
-                    .entries
-                    .map((entries) => Text(entries.value.message))
+                    .map((entrie) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              // add spacer on the correct side depending on uid
+                              entrie.uid == (ref.watch(authProvider).value)?.uid
+                                  ? const Spacer()
+                                  : Container(),
+                              Text(entrie.message),
+                              Text(entrie.timestamp.toString()),
+                            ],
+                          ),
+                        ))
                     .toList(),
               ),
             ),

@@ -6,9 +6,11 @@ part of 'main.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$currentMessageHash() => r'f87b905c114d9d7382e4fbed60bf9773e7dd16f1';
-
-/// See also [CurrentMessage].
+String _$currentMessageHash() =>
+    r'4baf3faf191c1a23de4e2bc66c4ab45102ab9e59'; //////////////////////////
+/////////////////////////
+///
+/// Copied from [CurrentMessage].
 @ProviderFor(CurrentMessage)
 final currentMessageProvider =
     AutoDisposeNotifierProvider<CurrentMessage, String>.internal(

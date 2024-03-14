@@ -4,21 +4,30 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_talk/auth_provider.dart';
 import 'package:flutter_talk/chat_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'firebase_options.dart';
 
 part 'main.g.dart';
 
-// current message provider
+//////////////////////////
+// Routing
+/////////////////////////
+final _router = GoRouter(routes: [
+  GoRoute(
+    path: '/',
+    builder: (context, state) => const Home(),
+  ),
+]);
+
+//////////////////////////
+// Providers
+/////////////////////////
 @riverpod
 class CurrentMessage extends _$CurrentMessage {
   @override
   String build() => "";
-
-  void set(String message) {
-    state = message;
-    debugPrint("message: $state");
-  }
+  void set(String message) => state = message;
 }
 
 extension ToggleBrightness on Brightness {
@@ -32,22 +41,19 @@ extension ToggleBrightness on Brightness {
 @riverpod
 class LightMode extends _$LightMode {
   @override
-  // get the mode of the pc
   Brightness build() =>
       SchedulerBinding.instance.platformDispatcher.platformBrightness;
   void toggle() => state = state.toggle();
 }
 
+//////////////////////////
+// Main class and entry
+// point for the app
+/////////////////////////
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerWidget {
@@ -55,85 +61,110 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       themeMode: ref.watch(lightModeProvider).toThemeMode(),
+      routerConfig: _router,
       darkTheme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.purple, brightness: Brightness.dark),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-            elevation: 3,
-            backgroundColor: Theme.of(context).primaryColor,
-            leadingWidth: 130,
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton.icon(
-                label: const Text("Login"),
-                icon: const Icon(Icons.account_box),
-                onPressed: () async {
-                  await ref.read(authProvider.notifier).signIn();
-                },
-              ),
+    );
+  }
+}
+
+class Home extends ConsumerWidget {
+  const Home({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: AppBar(
+          elevation: 3,
+          backgroundColor: Theme.of(context).primaryColor,
+          leadingWidth: 130,
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton.icon(
+              label: const Text("Login"),
+              icon: const Icon(Icons.account_box),
+              onPressed: () async {
+                await ref.read(authProvider.notifier).signIn();
+              },
             ),
-            actions: [
-              Switch(
-                  thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
-                      (Set<MaterialState> _) => Icon(
-                          ref.watch(lightModeProvider) == Brightness.light
-                              ? Icons.sunny
-                              : Icons.brightness_3)),
-                  value: ref.watch(lightModeProvider) == Brightness.dark,
-                  onChanged: (value) {
-                    ref.read(lightModeProvider.notifier).toggle();
-                  }),
-            ],
-            title: const Text("Flutter Demo")),
-        body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                reverse: true,
-                child: Column(
-                  children: ref
-                      .watch(chatProvider)
-                      .map((entrie) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: MessageWidget(entrie),
-                          ))
-                      .toList(),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(
-                onChanged: (t) {
-                  ref.watch(currentMessageProvider.notifier).set(t);
-                },
-                decoration: InputDecoration(
-                  hintText: "Enter your message",
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.send),
-                    onPressed: () {
-                      String message = ref.watch(currentMessageProvider);
-                      ref.watch(chatProvider.notifier).addMessage(message);
-                    },
-                  ),
-                ),
-              ),
-            )
+          ),
+          actions: [
+            Switch(
+                thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
+                    (Set<MaterialState> _) => Icon(
+                        ref.watch(lightModeProvider) == Brightness.light
+                            ? Icons.sunny
+                            : Icons.brightness_3)),
+                value: ref.watch(lightModeProvider) == Brightness.dark,
+                onChanged: (value) {
+                  ref.read(lightModeProvider.notifier).toggle();
+                }),
           ],
+          title: const Text("Flutter Demo")),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              reverse: true,
+              child: Column(
+                children: ref
+                    .watch(chatProvider)
+                    .map((entrie) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: MessageWidget(entrie),
+                        ))
+                    .toList(),
+              ),
+            ),
+          ),
+          Padding(padding: const EdgeInsets.all(16.0), child: TextInput())
+        ],
+      ),
+    );
+  }
+}
+
+//////////////////////////
+// Widget for the text input
+/////////////////////////
+class TextInput extends ConsumerWidget {
+  TextInput({super.key});
+
+  final TextEditingController _textController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return TextField(
+      controller: _textController,
+      onChanged: (t) => ref.watch(currentMessageProvider.notifier).set(t),
+      decoration: InputDecoration(
+        hintText: "Enter your message",
+        suffixIcon: IconButton(
+          icon: const Icon(Icons.send),
+          onPressed: () {
+            String message = ref.watch(currentMessageProvider);
+            ref.watch(chatProvider.notifier).addMessage(message);
+            ref.watch(currentMessageProvider.notifier).set("");
+            _textController.clear();
+          },
         ),
       ),
     );
   }
 }
 
+//////////////////////////
+// Widget for showing the messages
+/////////////////////////
 class MessageWidget extends ConsumerWidget {
-  final Message entrie;
   const MessageWidget(this.entrie, {super.key});
+
+  final Message entrie;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

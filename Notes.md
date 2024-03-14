@@ -43,6 +43,7 @@ Theming is extremely easy to do in flutter
 * Firebase - For auth, realtime storage and cloud messaging.
 * Collections - For doing lambda stuff with collections.
 * SharedPreferences - Works like android shared preferences
+* Lottie - TODO
 ## Making an app with the tools at our disposal
 ### Steps
 * Follow the Flutter setup guide!

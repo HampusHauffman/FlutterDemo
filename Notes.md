@@ -8,6 +8,8 @@ After this some honorable mentions in the flutter system.
 And then we'll hopefully test the finished product.
 
 ## Intro to Flutter
+* Who knows what flutter is
+* Who has used flutter
 ### Multiplatform
 ### Written in DART
 
@@ -17,10 +19,14 @@ And then we'll hopefully test the finished product.
 #### DevTools
 #### Flutter doctor
 #### Hot reload on IOS WEB and ANDROID
-#### Great tooling in VSCODE
+#### Great tooling in VSCODE and IntelliJ
+#### Auto end comments
 
 ## Code 
 ### Theme
+* Theaming is sourced from one place and has its own type
+* Eeasy light and dark mode
+* Great support for animations
 #### Material Design 3
 Theming is extremely easy to do in flutter
 ### Widgets
@@ -36,6 +42,8 @@ Theming is extremely easy to do in flutter
 * go_router - For navigation.
 * Firebase - For auth, realtime storage and cloud messaging.
 * Collections - For doing lambda stuff with collections.
+* SharedPreferences - Works like android shared preferences
+## Making an app with the tools at our disposal
 ### Steps
 * Follow the Flutter setup guide!
     * Install everything [https://docs.flutter.dev/get-started/install/macos/mobile-ios?tab=download]
@@ -45,6 +53,11 @@ Theming is extremely easy to do in flutter
     * Install Firebase **Core**
     * Install Firebase **Auth**
     * Install Firebase **Firestore**
+* Riverpod
+* Auth
+* Chat
+* Theming
+    * Dark mode
 
 ## Firebase
 * Oauth2 Login

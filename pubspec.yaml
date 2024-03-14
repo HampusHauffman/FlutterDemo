@@ -19,6 +19,7 @@ dependencies:
   uuid: ^4.3.3
   cloud_firestore_odm: ^1.0.0-dev.84
   collection: ^1.18.0
+  material_color_utilities: ^0.8.0
 
 dev_dependencies:
   flutter_test:

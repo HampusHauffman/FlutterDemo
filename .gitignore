@@ -41,3 +41,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Not including build dirs in this repo since no platform specific stuff will be added

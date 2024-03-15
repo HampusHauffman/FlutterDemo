@@ -14,21 +14,8 @@ part 'main.g.dart';
 // Routing
 /////////////////////////
 final _router = GoRouter(routes: [
-  GoRoute(
-    path: '/',
-    builder: (context, state) => const Home(),
-  ),
+  GoRoute(path: '/', builder: (context, state) => const Home()),
 ]);
-
-//////////////////////////
-// Providers
-/////////////////////////
-@riverpod
-class CurrentMessage extends _$CurrentMessage {
-  @override
-  String build() => "";
-  void set(String message) => state = message;
-}
 
 extension ToggleBrightness on Brightness {
   Brightness toggle() =>
@@ -47,8 +34,7 @@ class LightMode extends _$LightMode {
 }
 
 //////////////////////////
-// Main class and entry
-// point for the app
+// Main class and entry point for the app
 /////////////////////////
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -105,21 +91,22 @@ class Home extends ConsumerWidget {
                   ref.read(lightModeProvider.notifier).toggle();
                 }),
           ],
-          title: const Text("Flutter Demo")),
+          // make bold
+          title: const Text("Flutter Demo",
+              style: TextStyle(fontWeight: FontWeight.bold))),
       body: Column(
         children: [
           Expanded(
             child: SingleChildScrollView(
               reverse: true,
               child: Column(
-                children: ref
-                    .watch(chatProvider)
-                    .map((entrie) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: MessageWidget(entrie),
-                        ))
-                    .toList(),
-              ),
+                  children: ref
+                      .watch(chatProvider)
+                      .map((entrie) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: MessageWidget(entrie),
+                          ))
+                      .toList()),
             ),
           ),
           Padding(padding: const EdgeInsets.all(16.0), child: TextInput())

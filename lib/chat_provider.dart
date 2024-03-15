@@ -10,6 +10,19 @@ import 'package:uuid/uuid.dart';
 part 'chat_provider.g.dart';
 part 'chat_provider.freezed.dart';
 
+//////////////////////////
+// Provider for the current message in the text field
+/////////////////////////
+@riverpod
+class CurrentMessage extends _$CurrentMessage {
+  @override
+  String build() => "";
+  void set(String message) => state = message;
+}
+
+//////////////////////////
+// Providers for the chat messages
+/////////////////////////
 @Freezed()
 class Message with _$Message {
   factory Message({
@@ -38,20 +51,13 @@ class Chat extends _$Chat {
 
   @override
   List<Message> build() {
-    _docRef.snapshots().listen(
-      (event) {
-        state = event
-            .data()!
-            .map(
-              (key, value) => MapEntry(
-                key,
-                Message.fromJson(value),
-              ),
-            )
-            .values
-            .sorted((a, b) => a.timestamp.compareTo(b.timestamp));
-      },
-    );
+    _docRef.snapshots().listen((event) {
+      state = event
+          .data()!
+          .map((key, value) => MapEntry(key, Message.fromJson(value)))
+          .values
+          .sorted((a, b) => a.timestamp.compareTo(b.timestamp));
+    });
     return List.of([]);
   }
 }

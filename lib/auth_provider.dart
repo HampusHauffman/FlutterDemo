@@ -6,12 +6,8 @@ part 'auth_provider.g.dart';
 @riverpod
 class Auth extends _$Auth {
   user() => FirebaseAuth.instance.currentUser;
-
-  signIn() async {
-    var googleProvider = GoogleAuthProvider();
-
-    await FirebaseAuth.instance.signInWithPopup(googleProvider);
-  }
+  signIn() async =>
+      await FirebaseAuth.instance.signInWithPopup(GoogleAuthProvider());
 
   @override
   FutureOr<User> build() async {

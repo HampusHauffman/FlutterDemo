@@ -7,6 +7,14 @@ Then we'll check out some quick code.
 After this some honorable mentions in the flutter system.
 And then we'll hopefully test the finished product.
 
+All and all 260 lines of code for an app that:
+* Works on IOS WEB ANDROID and pc
+* Has theming with Light and dark mode
+* Has authentication
+* Has a realtime chat
+* Has real time updates
+
+
 ## Intro to Flutter
 * Who knows what flutter is
 * Who has used flutter
@@ -22,7 +30,7 @@ And then we'll hopefully test the finished product.
 #### Great tooling in VSCODE and IntelliJ
 #### Auto end comments
 
-## Code 
+## Code
 ### Theme
 * Theaming is sourced from one place and has its own type
 * Eeasy light and dark mode

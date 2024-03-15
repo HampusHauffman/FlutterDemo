@@ -15,19 +15,23 @@ All and all 260 lines of code for an app that:
 * Has real time updates
 
 
-## Intro to Flutter
+## What is Flutter
 * Who knows what flutter is
 * Who has used flutter
 ### Multiplatform
+TODO what does this mean
 ### Written in DART
+TODO null safety tree shaking blah
+### Made by google
+Extremely strong integreations with some of their tools
 
 ## Developing with Flutter
 ### Tooling
-#### Pubspec/PubDev
-#### DevTools
 #### Flutter doctor
+#### Pubspec/PubDev
+#### DevTools/IDE support
 #### Hot reload on IOS WEB and ANDROID
-#### Great tooling in VSCODE and IntelliJ
+#### Code generation
 #### Auto end comments
 
 ## Code
@@ -36,7 +40,9 @@ All and all 260 lines of code for an app that:
 * Eeasy light and dark mode
 * Great support for animations
 #### Material Design 3
-Theming is extremely easy to do in flutter
+* Comes with all widgets you could ever need designed with the Material Design system
+* Adaptive design
+* They have a demo!
 ### Widgets
 * Column
 * Center
@@ -45,7 +51,7 @@ Theming is extremely easy to do in flutter
 * FloatingActionButton
 ### Packages
 * Build_runner - For code generation.
-* Riverpod - For immuable state management and shared resources!
+* Riverpod - For immuable state management and shared resources!e
 * Freezed - For boilerplate code generation.
 * go_router - For navigation.
 * Firebase - For auth, realtime storage and cloud messaging.
@@ -63,6 +69,7 @@ Theming is extremely easy to do in flutter
     * Install Firebase **Auth**
     * Install Firebase **Firestore**
 * Riverpod
+    * Google actually recommends this packes predecessor
 * Auth
 * Chat
 * Theming
@@ -80,4 +87,5 @@ Theming is extremely easy to do in flutter
 
 ## Extra mentions
 * Dio is a really good http package with full support for OpenAPI standards code generation
-* Animations
+* Adaptive design
+* Serialization

@@ -68,14 +68,17 @@ class Home extends ConsumerWidget {
       appBar: AppBar(
           elevation: 3,
           backgroundColor: Theme.of(context).primaryColor,
-          leadingWidth: 130,
+          leadingWidth: 230,
           leading: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton.icon(
-              label: const Text("Login"),
               icon: const Icon(Icons.account_box),
+              label:
+                  Text(ref.watch(authProvider).value?.displayName ?? "Sign in"),
               onPressed: () async {
-                await ref.read(authProvider.notifier).signIn();
+                var usr = await ref.watch(authProvider.future);
+                var notif = ref.watch(authProvider.notifier);
+                usr == null ? await notif.signIn() : await notif.signOut();
               },
             ),
           ),

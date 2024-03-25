@@ -42,7 +42,7 @@ final currentMessageProvider =
 );
 
 typedef _$CurrentMessage = AutoDisposeNotifier<String>;
-String _$chatHash() => r'3bf52a6203c7896f96d04bd584e5ebadb45c2311';
+String _$chatHash() => r'28878c1f5ce516600f60a891658c8450fbd31793';
 
 /// See also [Chat].
 @ProviderFor(Chat)

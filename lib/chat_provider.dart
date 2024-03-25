@@ -42,7 +42,7 @@ class Chat extends _$Chat {
   Future<void> addMessage(String message) async {
     _docRef.update({
       const Uuid().v8().toString(): Message(
-        uid: (await ref.read(authProvider.future)).uid,
+        uid: (await ref.read(authProvider.future))!.uid,
         message: message,
         timestamp: DateTime.now(),
       ).toJson(),

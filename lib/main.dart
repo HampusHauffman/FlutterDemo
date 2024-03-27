@@ -48,9 +48,9 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
       themeMode: ref.watch(lightModeProvider).toThemeMode(),
       routerConfig: _router,
+      debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.purple, brightness: Brightness.dark),
@@ -66,9 +66,6 @@ class Home extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 3,
-          backgroundColor: Theme.of(context).primaryColor,
-          leadingWidth: 230,
           leading: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton.icon(
@@ -78,10 +75,13 @@ class Home extends ConsumerWidget {
               onPressed: () async {
                 var usr = await ref.watch(authProvider.future);
                 var notif = ref.watch(authProvider.notifier);
-                usr == null ? await notif.signIn() : await notif.signOut();
+                usr == null || usr.isAnonymous ? await notif.signIn() : await notif.signOut();
               },
             ),
           ),
+          elevation: 3,
+          backgroundColor: Theme.of(context).primaryColor,
+          leadingWidth: 230,
           actions: [
             Switch(
                 thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
@@ -168,12 +168,11 @@ class MessageWidget extends ConsumerWidget {
               left ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             Card(
-              elevation: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(entrie.message),
-              ),
-            ),
+                elevation: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(entrie.message),
+                )),
             Text(
                 "${DateTime.now().difference(entrie.timestamp).inMinutes} minutes ago",
                 style: Theme.of(context).textTheme.bodySmall),

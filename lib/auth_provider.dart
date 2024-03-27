@@ -8,14 +8,14 @@ class Auth extends _$Auth {
   signIn() async =>
       await FirebaseAuth.instance.signInWithPopup(GoogleAuthProvider());
 
-  signOut() async => await FirebaseAuth.instance.signOut();
+  signOut() async => await FirebaseAuth.instance.signInAnonymously();
 
   @override
   Future<User?> build() async {
+    FirebaseAuth.instance.signInAnonymously();
     FirebaseAuth.instance
         .authStateChanges()
         .listen((event) => state = AsyncValue.data(event));
-
     return FirebaseAuth.instance.currentUser!;
   }
 }

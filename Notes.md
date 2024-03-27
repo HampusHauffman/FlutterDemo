@@ -54,10 +54,11 @@ Extremely strong integreations with some of their tools
 * Riverpod - For immuable state management and shared resources!e
 * Freezed - For boilerplate code generation.
 * go_router - For navigation.
-* Firebase - For auth, realtime storage and cloud messaging.
+* Firebase - For auth, realtime storage, cloud messaging, and crash reports.
 * Collections - For doing lambda stuff with collections.
 * SharedPreferences - Works like android shared preferences
 * Lottie - TODO
+
 ## Making an app with the tools at our disposal
 ### Steps
 * Follow the Flutter setup guide!
@@ -74,6 +75,7 @@ Extremely strong integreations with some of their tools
 * Chat
 * Theming
     * Dark mode
+* Routing
 
 ## Firebase
 * Oauth2 Login

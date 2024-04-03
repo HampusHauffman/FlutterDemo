@@ -29,7 +29,9 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
+# Including build web so we can see it work on GH pages
+/build/*
+!/build/web/
 
 # Symbolication related
 app.*.symbols

@@ -71,7 +71,7 @@ class Home extends ConsumerWidget {
             child: ElevatedButton.icon(
               icon: const Icon(Icons.account_box),
               label:
-                  Text(ref.watch(authProvider).value?.displayName ?? "Sign in"),
+                  Text(ref.watch(authProvider).value?.displayName ?? "Sign in", overflow: TextOverflow.ellipsis),
               onPressed: () async {
                 var usr = await ref.watch(authProvider.future);
                 var notif = ref.watch(authProvider.notifier);
@@ -81,7 +81,7 @@ class Home extends ConsumerWidget {
           ),
           elevation: 3,
           backgroundColor: Theme.of(context).primaryColor,
-          leadingWidth: 230,
+          leadingWidth: 180,
           actions: [
             Switch(
                 thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
